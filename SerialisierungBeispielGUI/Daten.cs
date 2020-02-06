@@ -12,7 +12,9 @@ namespace SerialisierungBeispielGUI
         public string text;
         public int num;
         public bool check;
+
         public Daten() { }
+
         public Daten(string text, int num, bool check)
         {
             this.text = text;

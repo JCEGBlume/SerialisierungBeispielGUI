@@ -19,6 +19,10 @@ namespace SerialisierungBeispielGUI
 
         public static void Serialize(Daten daten)
         {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
             FileStream output = new FileStream(filePath, FileMode.OpenOrCreate);
             BinaryFormatter bf = new BinaryFormatter();
             bf.Serialize(output, daten);
@@ -31,11 +35,16 @@ namespace SerialisierungBeispielGUI
             BinaryFormatter bf = new BinaryFormatter();
             Daten daten = (Daten)bf.Deserialize(input);
             input.Close();
+
             return daten;
         }
 
         public static void SerializeXML(Daten daten)
         {
+            if (File.Exists(filePathXml))
+            {
+                File.Delete(filePathXml);
+            }
             FileStream output = new FileStream(filePathXml, FileMode.OpenOrCreate);
             XmlSerializer xmls = new XmlSerializer(typeof(Daten));
             xmls.Serialize(output, daten);
@@ -48,6 +57,7 @@ namespace SerialisierungBeispielGUI
             XmlSerializer xmls = new XmlSerializer(typeof(Daten));
             Daten daten = (Daten)xmls.Deserialize(input);
             input.Close();
+
             return daten;
         }
     }
