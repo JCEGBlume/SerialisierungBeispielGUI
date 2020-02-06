@@ -31,12 +31,23 @@ namespace SerialisierungBeispielGUI
 
         public static Daten Deserialize()
         {
-            FileStream input = new FileStream(filePath, FileMode.Open);
-            BinaryFormatter bf = new BinaryFormatter();
-            Daten daten = (Daten)bf.Deserialize(input);
-            input.Close();
+            try
+            {
+                using (FileStream input = new FileStream(filePath, FileMode.Open))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    Daten daten = (Daten)bf.Deserialize(input);
+                    input.Close();
 
-            return daten;
+                    return daten;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("!");
+                //throw;
+            }
+            return new Daten("Fehler", 0, false);
         }
 
         public static void SerializeXML(Daten daten)
@@ -53,12 +64,14 @@ namespace SerialisierungBeispielGUI
 
         public static Daten DeserializeXML()
         {
-            FileStream input = new FileStream(filePathXml, FileMode.Open);
-            XmlSerializer xmls = new XmlSerializer(typeof(Daten));
-            Daten daten = (Daten)xmls.Deserialize(input);
-            input.Close();
+            using (FileStream input = new FileStream(filePathXml, FileMode.Open))
+            {
+                XmlSerializer xmls = new XmlSerializer(typeof(Daten));
+                Daten daten = (Daten)xmls.Deserialize(input);
+                input.Close();
 
-            return daten;
+                return daten;
+            }
         }
     }
 }
