@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +56,16 @@ namespace SerialisierungBeispielGUI
             textBox1.Text = daten.text;
             numericUpDown1.Value = daten.num;
             checkBox1.Checked = daten.check;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Serialisierung.BinaerDateiLoeschen();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Serialisierung.XMLDateiLoeschen();
         }
     }
 }

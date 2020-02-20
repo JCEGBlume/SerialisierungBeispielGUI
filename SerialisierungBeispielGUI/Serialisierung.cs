@@ -42,10 +42,9 @@ namespace SerialisierungBeispielGUI
                     return daten;
                 }
             }
-            catch (Exception)
+            catch (IOException ioe)
             {
-                Console.WriteLine("!");
-                //throw;
+                Console.WriteLine("Dateifehler!");
             }
             return new Daten("Fehler", 0, false);
         }
@@ -64,13 +63,37 @@ namespace SerialisierungBeispielGUI
 
         public static Daten DeserializeXML()
         {
-            using (FileStream input = new FileStream(filePathXml, FileMode.Open))
+            try
             {
-                XmlSerializer xmls = new XmlSerializer(typeof(Daten));
-                Daten daten = (Daten)xmls.Deserialize(input);
-                input.Close();
+                using (FileStream input = new FileStream(filePathXml, FileMode.Open))
+                {
+                    XmlSerializer xmls = new XmlSerializer(typeof(Daten));
+                    Daten daten = (Daten)xmls.Deserialize(input);
+                    input.Close();
 
-                return daten;
+                    return daten;
+                }
+            }
+            catch (IOException ioe)
+            {
+                Console.WriteLine("Dateifehler!");
+            }
+            return new Daten("Fehler", 0, false);
+        }
+
+        public static void BinaerDateiLoeschen()
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        public static void XMLDateiLoeschen()
+        {
+            if (File.Exists(filePathXml))
+            {
+                File.Delete(filePathXml);
             }
         }
     }
